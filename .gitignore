@@ -1,0 +1,12 @@
+__pycache__/
+db.sqlite3
+*.log
+**/migrations/*.py
+**/migrations/*.pyc
+*.mo
+*.pot
+*.py[cod]
+.env
+
+local_settings.py
+node_modules/
