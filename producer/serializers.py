@@ -19,7 +19,7 @@ class CheckSerializer(serializers.ModelSerializer):
         items_data = validated_data.pop('items')
         check = Check.objects.create(**validated_data)
         for item_data in items_data:
-            CheckItem.objects.create(check=check, **item_data)
+            CheckItem.objects.create(check_ref=check, **item_data)
         return check
 
     def validate(self, data):

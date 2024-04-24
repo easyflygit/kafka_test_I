@@ -17,6 +17,11 @@ class CheckView(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
+    def get(self, request):
+        checks = Check.objects.all()
+        serializer = CheckSerializer(checks, many=True)
+        return Response(serializer.data)
+
 
 class PurchaseCheckAPIView(APIView):
     def post(self, request):
