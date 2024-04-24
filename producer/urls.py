@@ -1,8 +1,8 @@
 from django.urls import path
-from . import views
-
+from .views import PurchaseCheckAPIView, CheckView
 
 urlpatterns = [
-    path('checks/', views.CheckView.as_view(), name='check-list'),
+    path('checks/', CheckView.as_view(), name='check-list'),
+    path('purchase_check/', PurchaseCheckAPIView.as_view(), name='purchase_check'),
 
 ]
