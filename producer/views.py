@@ -17,7 +17,7 @@ class CheckView(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
-б
+
 class PurchaseCheckAPIView(APIView):
     def post(self, request):
         # Получаем данные о чеке покупки из запроса
