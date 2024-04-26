@@ -5,8 +5,8 @@ from kafka import KafkaProducer
 import json
 import uuid
 import time
-from .models import Check, CheckItem
-from .serializers import CheckSerializer
+from .models import Check
+from producer.serializers import CheckSerializer
 
 
 class CheckView(APIView):
@@ -31,9 +31,16 @@ class PurchaseCheckAPIView(APIView):
         # Добавляем уникальный идентификатор транзакции, если он есть
         if 'transaction_id' not in request.data:
             check_data['transaction_id'] = str(uuid.uuid4())
-
         # Добавляем временную метку совершения покупки
         check_data['timestamp'] = time.strftime('%Y-%m-%dT%H:%M:%S')
+        check_data['items'] = [
+            {"product_id": "product_id_1", "quantity": 2, "price": 10.99, "category": "groceries"},
+            {"product_id": "product_id_2", "quantity": 1, "price": 5.49, "category": "electronics"}
+        ]
+        check_data['total_amount'] = 27.47
+        check_data['nds_amount'] = 2.47
+        check_data['tips_amount'] = 3.0
+        check_data['payment_method'] = 'credit_card'
 
         # Создаем экземпляр Kafka Producer
         producer = KafkaProducer(bootstrap_servers='localhost:9092')
@@ -48,7 +55,7 @@ class PurchaseCheckAPIView(APIView):
         producer.flush()
 
         # Возвращаем ответ с подтверждением отправки чека
-        return Response(json_check)
+        return Response(json_check, status=status.HTTP_201_CREATED)
 
 
 

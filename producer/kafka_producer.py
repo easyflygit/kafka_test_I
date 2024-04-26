@@ -2,6 +2,7 @@ from kafka import KafkaProducer
 import json
 import uuid
 import time
+import logging
 
 # Создаем экземпляр Kafka Producer
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
@@ -30,7 +31,7 @@ if __name__ == "__main__":
     example_check = {
         "items": [
             {"product_id": "product_id_1", "quantity": 2, "price": 10.99, "category": "groceries"},
-            {"product_id": "product_id_2", "quantity": 1, "price": 5.49, "category": "electronics"}
+            {"product_id": "product_id_2", "quantity": 1, "price": 5.49, "category": "electronics"},
         ],
         "total_amount": 27.47,
         "nds_amount": 2.47,

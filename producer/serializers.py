@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Check, CheckItem
+from producer.models import Check, CheckItem
 
 
 class CheckItemSerializer(serializers.ModelSerializer):
