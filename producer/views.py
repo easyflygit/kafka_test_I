@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from kafka import KafkaProducer
@@ -6,7 +7,6 @@ import uuid
 import time
 from .models import Check, CheckItem
 from .serializers import CheckSerializer
-from .utils import send_purchase_check
 
 
 class CheckView(APIView):
@@ -14,10 +14,10 @@ class CheckView(APIView):
         serializer = CheckSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, request):
+    def get(self, requests):
         checks = Check.objects.all()
         serializer = CheckSerializer(checks, many=True)
         return Response(serializer.data)
@@ -29,16 +29,14 @@ class PurchaseCheckAPIView(APIView):
         check_data = request.data
 
         # Добавляем уникальный идентификатор транзакции, если он есть
-        if 'transaction_id' in request.data:
-            check_data['transaction_id'] = request.data['transaction_id']
-        else:
+        if 'transaction_id' not in request.data:
             check_data['transaction_id'] = str(uuid.uuid4())
-
-        # Создаем экземпляр Kafka Producer
-        producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
         # Добавляем временную метку совершения покупки
         check_data['timestamp'] = time.strftime('%Y-%m-%dT%H:%M:%S')
+
+        # Создаем экземпляр Kafka Producer
+        producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
         # Преобразуем чек в формат JSON
         json_check = json.dumps(check_data)
@@ -50,18 +48,8 @@ class PurchaseCheckAPIView(APIView):
         producer.flush()
 
         # Возвращаем ответ с подтверждением отправки чека
-        return Response({'message': 'Purchase check sent to Kafka topic "purchase_checks".'})
+        return Response(json_check)
 
-# class PurchaseCheckAPIView(APIView):
-#     def post(self, request):
-#         # Получаем данные о чеке покупки из запроса
-#         check_data = request.data
-#
-#         # Отправляем чек покупки
-#         response_data = send_purchase_check(check_data)
-#
-#         # Возвращаем ответ
-#         return Response(response_data)
 
 
 

@@ -4,7 +4,7 @@ import uuid
 import time
 
 # Создаем экземпляр Kafka Producer
-producer = KafkaProducer(bootstrap_servers='localhost:9092')
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
 
 # Функция для отправки чека покупки в тему Kafka
@@ -24,7 +24,7 @@ def send_purchase_check(check):
     print(f"Sent purchase check to Kafka topic 'purchase_checks': {json_check}")
 
 
-# Пример использования
+ # Пример использования
 if __name__ == "__main__":
     # Пример чека покупки
     example_check = {
@@ -39,3 +39,4 @@ if __name__ == "__main__":
     }
     # Отправляем тестовый чек покупки
     send_purchase_check(example_check)
+
