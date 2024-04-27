@@ -3,6 +3,8 @@ import django
 from kafka import KafkaConsumer
 from django.conf import settings
 import json
+import sys
+sys.path.append('/Users/imac/Desktop/python_work/kafka_drf_test_task_I/receipts_server')
 
 # Устанавливаем переменную окружения DJANGO_SETTINGS_MODULE
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'receipts_server.settings')
