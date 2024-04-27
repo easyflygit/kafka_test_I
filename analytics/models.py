@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Place(models.Model):
-    place_id = models.UUIDField(primary_key=True)
+    place_id = models.AutoField(primary_key=True)
     place_name = models.CharField(max_length=255)
     total_purchases = models.PositiveIntegerField(default=0)
     average_receipt = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
@@ -27,6 +27,8 @@ class Check(models.Model):
     nds_amount = models.DecimalField(max_digits=10, decimal_places=2)
     tips_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     payment_method = models.CharField(max_length=100)
+    place_of_purchase = models.CharField(max_length=100, null=True, blank=True)  # поле для места покупки
+    category = models.CharField(max_length=100, null=True, blank=True)  # поле для категории товаров
 
     def __str__(self):
         return self.transaction_id
