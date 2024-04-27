@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     # my apps
     'producer.apps.ProducerConfig',
+    'analytics.apps.AnalyticsConfig',
 ]
 
 MIDDLEWARE = [
