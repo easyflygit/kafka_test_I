@@ -17,6 +17,7 @@ class CategoryAnalytics(models.Model):
     category_name = models.CharField(max_length=255)
     total_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     average_receipt = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    total_purchases = models.PositiveIntegerField(default=0)
 
 
 class Check(models.Model):

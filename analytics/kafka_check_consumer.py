@@ -55,18 +55,28 @@ class CheckConsumer:
         # Получаем данные о месте покупки и категориях товаров
         place_name = check_data.get('place_of_purchase', 'Unknown')
         place, created = Place.objects.get_or_create(place_name=place_name)
+
         place.total_purchases += 1
-        place.average_receipt = (Decimal(place.average_receipt) * (
-                    place.total_purchases - 1) + total_amount) / place.total_purchases
         place.total_nds += Decimal(check_data['nds_amount'])
         if check_data.get('tips_amount'):
             place.total_tips += Decimal(check_data['tips_amount'])
+
+        if total_amount > 0:
+            place.average_receipt = (Decimal(place.average_receipt) * (place.total_purchases - 1) + total_amount) / place.total_purchases
+
         place.save()
 
         # Пример сохранения данных в модели CategoryAnalytics
         for category_name in categories:
             category_analytics, created = CategoryAnalytics.objects.get_or_create(category_name=category_name)
             category_analytics.total_spent += total_amount
+
+            category_analytics.total_purchases += 1
+
+            if total_amount > 0:
+                category_analytics.average_receipt =\
+                    (category_analytics.average_receipt *
+                     (category_analytics.total_purchases - 1) + total_amount) / category_analytics.total_purchases
             category_analytics.save()
 
         # Создаем или обновляем объект Check
