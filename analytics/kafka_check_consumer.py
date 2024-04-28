@@ -53,7 +53,7 @@ class CheckConsumer:
             return
 
         # Получаем данные о месте покупки и категориях товаров
-        place_name = check_data.get('place_of_purchase', 'Unknown')
+        place_name = check_data.get('place_of_purchase', 'Store ABC')
         place, created = Place.objects.get_or_create(place_name=place_name)
 
         place.total_purchases += 1
@@ -104,6 +104,7 @@ class CheckConsumer:
             print("Paid by credit card")
         else:
             print("Paid by other method")
+        check.save()
 
 
 # Создаем экземпляр потребителя чеков

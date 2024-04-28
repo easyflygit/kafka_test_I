@@ -19,6 +19,9 @@ class CategoryAnalytics(models.Model):
     average_receipt = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total_purchases = models.PositiveIntegerField(default=0)
 
+    def __str__(self):
+        return self.category_name
+
 
 class Check(models.Model):
     transaction_id = models.CharField(max_length=100, unique=True)
@@ -33,3 +36,5 @@ class Check(models.Model):
 
     def __str__(self):
         return self.transaction_id
+
+
