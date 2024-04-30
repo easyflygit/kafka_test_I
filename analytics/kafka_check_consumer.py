@@ -16,6 +16,7 @@ from producer import logger
 from decimal import Decimal
 from datetime import datetime
 from django.utils import timezone
+from analytics.tasks import calculate_analytics
 
 
 class CheckConsumer:
@@ -137,6 +138,7 @@ class CheckConsumer:
                 quantity=item_data['quantity'],
                 price=item_data['price']
             )
+        calculate_analytics.delay()
         logger.some_function('Purchase check saved: %s' % check_data)
         # Пример: проверка способа оплаты и дополнительных данных
         if check_data['payment_method'] == 'credit_card':

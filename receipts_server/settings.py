@@ -180,3 +180,8 @@ LOGGING = {
         },
     },
 }
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_IMPORTS = (
+    'analytics.tasks',  # Импорт задач из модуля analytics.tasks
+)
