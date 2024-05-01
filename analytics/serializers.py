@@ -5,7 +5,7 @@ from .models import Place, CategoryAnalytics
 class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
-        fields = ['name', 'total_purchases', 'average_receipt']
+        fields = ['id', 'name', 'total_purchases', 'average_receipt']
 
 
 class CategoryAnalyticsSerializer(serializers.ModelSerializer):
@@ -14,4 +14,4 @@ class CategoryAnalyticsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CategoryAnalytics
-        fields = ['place', 'category', 'total_spent', 'average_receipt', 'total_purchases']
+        fields = ['id', 'place', 'category', 'total_spent', 'average_receipt', 'total_purchases']

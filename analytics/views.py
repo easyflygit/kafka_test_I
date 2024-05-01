@@ -6,7 +6,7 @@ from analytics.serializers import PlaceSerializer, CategoryAnalyticsSerializer
 from .models import Place, CategoryAnalytics
 
 
-class PlaceView(generics.ListCreateAPIView):
+class PlaceList(generics.ListCreateAPIView):
     queryset = Place.objects.all()
     serializer_class = PlaceSerializer
 
@@ -16,6 +16,11 @@ class PlaceView(generics.ListCreateAPIView):
         response.data.pop('next', None)
         response.data.pop('previous', None)
         return response
+
+
+class PlaceDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Place.objects.all()
+    serializer_class = PlaceSerializer
 
 
 class CategoryAnalyticsList(generics.ListCreateAPIView):
