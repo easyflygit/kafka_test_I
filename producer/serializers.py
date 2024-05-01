@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from producer.models import Check, CheckItem
+from analytics.models import Check, CheckItem
 
 
 class CheckItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = CheckItem
-        fields = ('product_id', 'quantity', 'price', 'category')
+        fields = ('product_id', 'quantity', 'price', 'check_ref')
 
 
 class CheckSerializer(serializers.ModelSerializer):

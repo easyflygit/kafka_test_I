@@ -5,7 +5,7 @@ from kafka import KafkaProducer
 import json
 import uuid
 import time
-from .models import Check
+from analytics.models import Check
 from producer.serializers import CheckSerializer
 
 
