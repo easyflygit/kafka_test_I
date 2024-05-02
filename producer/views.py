@@ -9,18 +9,18 @@ from analytics.models import Check
 from producer.serializers import CheckSerializer
 
 
-class CheckView(APIView):
-    def post(self, request):
-        serializer = CheckSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class CheckView(APIView):
+    # def post(self, request):
+    #     serializer = CheckSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def get(self, requests):
-        checks = Check.objects.all()
-        serializer = CheckSerializer(checks, many=True)
-        return Response(serializer.data)
+    # def get(self, requests):
+    #     checks = Check.objects.all()
+    #     serializer = CheckSerializer(checks, many=True)
+    #     return Response(serializer.data)
 
 
 class PurchaseCheckAPIView(APIView):
